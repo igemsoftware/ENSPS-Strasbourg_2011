@@ -1,0 +1,45 @@
+----------------------
+--   Complexation   --
+----------------------
+
+library ieee;
+use ieee.math_real.all,ieee.std_logic_1164.all;
+use work.biological_systems.all;
+use work.all;
+
+
+
+entity %%Complexation_name%% is
+	generic (kp1,km1,kdegr : real := 0.0);
+	port (terminal Pro1_term : %%Prot1_nature%%;
+		  terminal Pro2_term : %%Prot2_nature%%;
+	      terminal Comp_term : %%Comp_nature%%);
+end;
+
+architecture biologique of %%Complexation_name%% is
+
+	constant valr_pro1,valr_pro2 :real := 10.0;
+
+	quantity Cpro1 across Fpro1 through Pro1_term to %%Prot1_cell_nature%%;
+	quantity Cpro2 across Fpro2 through Pro2_term to %%Prot2_cell_nature%%;
+	quantity Ccomp across Fcomp through Comp_term to %%Comp_cell_nature%%;
+		
+Begin
+
+	r_pro1 : entity %%Resistor_prot1_name%%(conservative)
+			 generic map (valr_pro1)
+			 port map (a => Pro1_term, b => %%Prot1_cell_nature%%);
+	r_pro2 : entity %%Resistor_prot1_name%%(conservative)
+			 generic map (valr_pro2)
+			 port map (a => Pro2_term, b => %%Prot2_cell_nature%%);
+
+	r_comp1 : entity %%Resistor_comp_name%%(conservative)
+			  generic map (1.0/km1)
+			  port map (a => Comp_term, b => %%Comp_cell_nature%%);
+	r_comp2 : entity %%Resistor_comp_name%%(conservative)
+			  generic map (1.0/kdegr)
+			  port map (a => Comp_term, b => %%Comp_cell_nature%%);
+	
+	Fcomp == kp1*Cpro1*Cpro2;
+	
+end;

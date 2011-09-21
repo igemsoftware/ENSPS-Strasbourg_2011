@@ -1,0 +1,24 @@
+------------------
+--   Resistor   --
+------------------
+
+library ieee;
+use ieee.math_real.all,ieee.std_logic_1164.all;
+use work.biological_systems.all;
+use work.all;
+
+
+entity %%Resistor_name%% is
+	generic (r : real);
+	port (terminal a, b : %%Port_nature%%); 
+end %%Resistor_name%%;
+
+
+
+architecture conservative of %%Resistor_name%% is
+
+quantity Cres across Fres through a to b;
+
+begin
+	Cres == Fres * r;
+end conservative;

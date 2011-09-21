@@ -1,0 +1,76 @@
+-------------------
+--   Synthesis   --
+-------------------
+
+library ieee;
+use ieee.math_real.all,ieee.std_logic_1164.all;
+use work.biological_systems.all;
+use work.all;
+
+
+
+entity %%Synthesis_name%% is
+	generic (Kxa : real := 0.0,
+			 Kxr : real := 0.0,
+			 ktr : real := 0.0,
+			 ktl : real := 0.0,
+			 kdep : real := 0.0,
+			 kcompl : real := 0.0,
+			 dARNm : real := 0.0,
+			 dp : real := 0.0,
+			 a : real := 0.0,
+			 na : real := 0.0,
+			 nr : real := 0.0);
+	port (terminal Act_term : %%Act_nature%%;
+		  terminal Rep_term : %%Rep_nature%%;
+		  terminal Prot_term : %%Prot_nature%%);
+end;
+
+architecture conservative of %%Synthesis_name%% is
+
+	constant valr_act : real := 10.0;
+	constant valr_rep : real := 10.0;
+	constant valc_arnm : real := 1.0;
+	constant valc_prot : real := 1.0;
+ 
+	terminal ARNm_term : %%ARNm_nature%%;
+
+	quantity Cact across Act_term to %%Act_cell_nature%%;
+	quantity Crep across Rep_term to %%Rep_cell_nature%%;
+	quantity CARNm across FARNm through ARNm_term to %%ARNm_cell_nature%%;
+	quantity Cprot across Fprot through Prot_term to %%Prot_cell_nature%%;
+		
+Begin
+
+	r_act : entity %%Resistor_act_name%%(conservative)
+			generic map (valr_act)
+			port map (a => Act_term, b => %%Act_cell_nature%%);
+			
+	r_rep : entity %%Resistor_rep_name%%(conservative)
+			generic map (valr_rep)
+			port map (a => Rep_term, b => %%Rep_cell_nature%%);
+
+			
+	r_arnm : entity %%Resistor_arnm_name%%(conservative)
+			 generic map (1.0/dARNm)
+			 port map (a => ARNm_term, b => %%ARNm_cell_nature%%);
+			 
+	c_arnm : entity %%Capacitor_arnm_name%%(conservative)
+			 generic map (valc_arnm)
+			 port map (a => ARNm_term, b => %%ARNm_cell_nature%%);					   
+
+			 
+	r_prot : entity %%Resistor_prot_name%%(conservative)
+			 generic map (1.0/dp)
+			 port map (a => Prot_term, b => %%Prot_cell_nature%%);
+			 
+	c_prot : entity %%Capacitor_prot_name%%(conservative)
+		     generic map (valc_prot)
+		     port map (a => Prot_term, b => %%Prot_cell_nature%%);
+
+	
+	FARNm == ktr*(a + 1.0/((1.0+(Kxa/(Cact+0.000000000000000001))**na)*(1.0+(Kxr/(Crep+0.000000000000000001))**(-nr))));
+	
+	Fprot == ktl*CARNm;
+	
+end conservative;

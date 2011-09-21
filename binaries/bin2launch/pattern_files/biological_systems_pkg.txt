@@ -1,0 +1,30 @@
+library IEEE;
+    use IEEE.FUNDAMENTAL_CONSTANTS.all;
+
+package BIOLOGICAL_SYSTEMS is
+   -- type declarations
+
+   -- subtype declarations
+   subtype CONCENTRATION     is REAL tolerance "DEFAULT_CONCENTRATION";
+   subtype FLUX     is REAL tolerance "DEFAULT_FLUX";
+
+   -- nature declarations
+
+   nature BIOLOGICAL is
+      CONCENTRATION        across
+      FLUX        through
+      BIOLOGICAL_REF reference;
+
+   %%Nature_declaration%%
+	  
+   attribute UNIT of CONCENTRATION       : subtype is "Concentration";
+   attribute UNIT of FLUX     		     : subtype is "Protein";
+   
+   attribute SYMBOL of CONCENTRATION     : subtype is "C";
+   attribute SYMBOL of FLUX     		 : subtype is "P";
+
+   alias CELL is BIOLOGICAL_REF;
+   
+   %%Alias_declaration%%
+   
+end package BIOLOGICAL_SYSTEMS;

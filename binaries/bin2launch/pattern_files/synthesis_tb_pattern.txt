@@ -1,0 +1,36 @@
+-------------------
+--   Testbench   --
+-------------------
+
+library ieee;
+use ieee.math_real.all,ieee.std_logic_1164.all;
+use work.biological_systems.all;
+use work.all;
+
+
+
+entity %%Testbench_name%% is
+	port (
+		
+		  %%Port_declaration%%
+		
+		 );
+end;
+
+architecture conservative of %%Testbench_name%% is
+
+%%Constant_declaration%%
+
+%%Signal_declaration%%
+
+%%Quantity_declaration%%
+		
+Begin
+
+%%Entity_declaration%%
+
+%%Signal_to_quantity%%
+
+%%Signal_variation%%
+	
+end conservative;

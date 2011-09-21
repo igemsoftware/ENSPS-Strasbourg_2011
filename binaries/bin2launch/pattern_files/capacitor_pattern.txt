@@ -1,0 +1,24 @@
+------------------
+--   Capacitor   --
+------------------
+
+library ieee;
+use ieee.math_real.all,ieee.std_logic_1164.all;
+use work.biological_systems.all;
+use work.all;
+
+
+entity %%Capacitor_name%% is
+	generic (c : real);
+	port (terminal a, b : %%Port_nature%%); 
+end %%Capacitor_name%%;
+
+
+
+architecture conservative of %%Capacitor_name%% is
+
+quantity Ccap across Fcap through a to b;
+
+begin
+	Fcap == c * Ccap'dot;
+end conservative;
