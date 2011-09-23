@@ -350,7 +350,7 @@ void Manager::systemCreationRequest(QString name, QStringList reactions, QString
 
     patCreation(name,reaction_in_system_tab,reaction_in_system_tab_size,timing);
 
-    System new_system(reaction_in_system_tab,reaction_in_system_tab_size,name.toStdString(),"E_"+name.toStdString(),name.toStdString(),var_species, timing.at(1));
+    System new_system(reaction_in_system_tab,reaction_in_system_tab_size,"E_"+name.toStdString(),name.toStdString(),name.toStdString(),var_species, timing.at(1));
     bool res = new_system.test_bench_generation();
     emit systemCreationSuccess(res,name);
 
